@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import * as LS from '../../styles';
 
 export const Text = styled.div`
   font-size: 18px;
