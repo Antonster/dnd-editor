@@ -3,8 +3,12 @@ import {
   setBoardColumns
 } from './actions';
 
+const localData = localStorage.getItem('reduxState')
+  ? JSON.parse(localStorage.getItem('reduxState'))
+  : {};
+
 const initialState = {
-  boardColumns: []
+  ...localData.board
 };
 
 const reducer = createReducer(initialState, builder => {
