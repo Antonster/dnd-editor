@@ -13,6 +13,44 @@ const setBoardColumns = createAction(
   })
 );
 
+const createColumn = ({ listId }) => (dispatch, getRootState) => {
+  const { board: { boardColumns } } = getRootState();
+
+  const result = [
+    ...boardColumns,
+    {
+      listId,
+      items: []
+    }
+  ];
+
+  dispatch(setBoardColumns(result));
+};
+
+const createElement = ({ elemId, type, listId }) => (dispatch, getRootState) => {
+  const { board: { boardColumns } } = getRootState();
+
+  const result = boardColumns.map(elem => {
+    if (elem.listId === listId) {
+      return {
+        ...elem,
+        items: [
+          ...elem.items,
+          {
+            id: elemId,
+            type,
+            content: `Some ${type}`
+          }
+        ]
+      };
+    }
+
+    return elem;
+  });
+
+  dispatch(setBoardColumns(result));
+};
+
 const reorder = (list, startIndex, endIndex) => {
   const result = [...list];
   const [removed] = result.splice(startIndex, 1);
@@ -79,6 +117,8 @@ const reorderElement = ({ source, destination }) => (dispatch, getRootState) => 
 
 export {
   setBoardColumns,
+  createColumn,
+  createElement,
   reorderColumn,
   reorderElement
 };

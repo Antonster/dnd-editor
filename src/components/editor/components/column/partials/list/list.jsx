@@ -16,7 +16,7 @@ const List = ({ listId, items }) => (
         isDraggingFrom={Boolean(dropSnapshot.draggingFromThisWith)}
         {...dropProvided.droppableProps}
       >
-        <div ref={dropProvided.innerRef}>
+        <S.DropZone ref={dropProvided.innerRef}>
           {items.map(({ id, type, content }, index) => (
             <Draggable
               key={id}
@@ -57,7 +57,7 @@ const List = ({ listId, items }) => (
             </Draggable>
           ))}
           {dropProvided.placeholder}
-        </div>
+        </S.DropZone>
       </S.Wrapper>
     )}
   </Droppable>

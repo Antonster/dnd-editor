@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { v4 as uuid } from 'uuid';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { boardActionCreator } from 'src/store/actions';
 import { Column } from './components/components';
@@ -34,16 +35,25 @@ const Editor = () => {
     }
   };
 
+  const createColumn = () => {
+    dispatch(boardActionCreator.createColumn({
+      listId: uuid()
+    }));
+  };
+
   return (
     <S.Container>
       <S.Control>
-        <S.AddGroupButton>Add Group</S.AddGroupButton>
+        <S.AddGroupButton
+          onClick={createColumn}
+        >
+          Add Group
+        </S.AddGroupButton>
       </S.Control>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
           droppableId="board"
           type="COLUMN"
-          direction="horizontal"
         >
           {provided => (
             <S.DndWrapper

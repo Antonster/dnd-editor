@@ -9,6 +9,7 @@ export const Control = styled.div`
 
 export const AddGroupButton = styled(GS.MainButton)``;
 
-export const DndWrapper = styled(GS.FlexContainer)`
+export const DndWrapper = styled.div`
   width: 100%;
+  overflow-x: auto;
 `;

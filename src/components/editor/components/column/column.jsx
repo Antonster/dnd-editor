@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Dropdown } from 'semantic-ui-react';
+import { v4 as uuid } from 'uuid';
 import { Draggable } from 'react-beautiful-dnd';
+import { boardActionCreator } from 'src/store/actions';
 import {
   List
 } from './partials/partials';
@@ -9,55 +11,67 @@ import * as S from './styles';
 
 const addingOptions = [
   {
-    key: 'Title',
-    text: 'Title',
-    value: 'Title',
-    label: { color: 'olive', empty: true, circular: true }
+    text: 'Add Title',
+    type: 'Title'
   },
   {
-    key: 'Text',
-    text: 'Text',
-    value: 'Text',
-    label: { color: 'grey', empty: true, circular: true }
+    text: 'Add Text',
+    type: 'Text'
   }
 ];
 
-const Column = ({ listId, listIndex, items }) => (
-  <Draggable draggableId={listId} index={listIndex}>
-    {(provided, snapshot) => (
-      <S.Container
-        {...provided.draggableProps}
-        ref={provided.innerRef}
-        isDragging={snapshot.isDragging}
-      >
-        <S.Header
-          {...provided.dragHandleProps}
+const Column = ({ listId, listIndex, items }) => {
+  const dispatch = useDispatch();
+  const [inputValue, setInputValue] = useState('');
+
+  const createElement = type => {
+    dispatch(boardActionCreator.createElement({
+      elemId: uuid(),
+      type,
+      listId
+    }));
+    setInputValue('');
+  };
+
+  return (
+    <Draggable draggableId={listId} index={listIndex}>
+      {(provided, snapshot) => (
+        <S.Container
+          {...provided.draggableProps}
+          ref={provided.innerRef}
           isDragging={snapshot.isDragging}
-        />
-        <List
-          listId={listId}
-          items={items}
-        />
-        <Dropdown
-          style={{
-            margin: '0 0 30px 30px'
-          }}
-          icon="plus"
-          labeled
-          button
         >
-          <Dropdown.Menu>
-            <Dropdown.Menu scrolling>
-              {addingOptions.map(option => (
-                <Dropdown.Item key={option.value} {...option} />
-              ))}
-            </Dropdown.Menu>
-          </Dropdown.Menu>
-        </Dropdown>
-      </S.Container>
-    )}
-  </Draggable>
-);
+          <S.Header
+            {...provided.dragHandleProps}
+            isDragging={snapshot.isDragging}
+          />
+          <List
+            listId={listId}
+            items={items}
+          />
+          <S.MenuContainer>
+            <S.Input
+              type="text"
+              placeholder="Type '/' for commands"
+              value={inputValue}
+              onChange={e => setInputValue(e.target.value)}
+            />
+            {inputValue === '/'
+            && (
+              <S.Menu>
+                {addingOptions.map(({ type, text }) => (
+                  <S.MenuItem key={type} onClick={() => createElement(type)}>
+                    {text}
+                  </S.MenuItem>
+                ))}
+              </S.Menu>
+            )}
+          </S.MenuContainer>
+        </S.Container>
+      )}
+    </Draggable>
+  );
+};
 
 Column.propTypes = {
   listId: PropTypes.string.isRequired,
