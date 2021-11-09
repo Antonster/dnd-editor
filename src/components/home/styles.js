@@ -4,6 +4,7 @@ import * as GS from 'src/styles/styles';
 export const Container = styled.div``;
 
 export const Space = styled(GS.Space)`
+  padding: 30px;
   color: #3b3b3b;
 `;
 

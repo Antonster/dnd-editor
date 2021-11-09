@@ -1,62 +1,36 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { List } from './components/components';
+import { boardActionCreator } from 'src/store/actions';
+import { Column } from './components/components';
 import * as S from './styles';
 
-const fakeData = [
-  {
-    listId: '1234',
-    items: [
-      {
-        id: '1',
-        type: 'Title',
-        content: 'Title'
-      },
-      {
-        id: '2',
-        type: 'Text',
-        content: 'Text'
-      },
-      {
-        id: '3',
-        type: 'Text',
-        content: 'Big text'
-      }
-    ]
-  },
-  {
-    listId: '4321',
-    items: [
-      {
-        id: '4',
-        type: 'Text',
-        content: 'Text'
-      },
-      {
-        id: '5',
-        type: 'Text',
-        content: 'Big text'
-      }
-    ]
-  }
-];
-
 const Editor = () => {
+  const {
+    boardColumns
+  } = useSelector(store => ({
+    boardColumns: store.board.boardColumns
+  }));
+  const dispatch = useDispatch();
+
   const onDragEnd = result => {
     const { source, destination, type } = result;
 
     if (!destination) {
       return;
     }
-    console.log(source, destination, type);
 
-    // did not move anywhere - can bail early
-    if (
-      source.droppableId === destination.droppableId
-      && source.index === destination.index
-    ) {
-      // eslint-disable-next-line no-useless-return
-      return;
+    if (type === 'COLUMN') {
+      dispatch(boardActionCreator.reorderColumn({
+        startIndex: source.index,
+        endIndex: destination.index
+      }));
+    }
+    if (type === 'LIST') {
+      dispatch(boardActionCreator.reorderElement({
+        source,
+        destination
+      }));
     }
   };
 
@@ -79,8 +53,8 @@ const Editor = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              {fakeData.map(({ listId, items }, listIndex) => (
-                <List
+              {boardColumns.map(({ listId, items }, listIndex) => (
+                <Column
                   key={listId}
                   listId={listId}
                   listIndex={listIndex}

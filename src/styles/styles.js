@@ -6,6 +6,7 @@ const color = {
   primaryDark: '#d9ae46',
   green: '#A0C452',
   blue: '#08A2B5',
+  blueDark: '#038c9b',
   red: '#E85D64'
 };
 
@@ -94,7 +95,6 @@ export const MainLink = styled(NavLink)`
 `;
 
 export const Space = styled.div`
-  padding: 30px;
   border-radius: 5px;
   box-shadow: 0 3px 4px 0 #ececec;
   background: #ffffff;

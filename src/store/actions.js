@@ -1,2 +1,2 @@
-export * as objectListActionCreator from './home/actions';
-export * as objectDetailedActionCreator from './board/actions';
+export * as homeActionCreator from './home/actions';
+export * as boardActionCreator from './board/actions';

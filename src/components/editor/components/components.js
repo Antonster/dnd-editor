@@ -1,5 +1,5 @@
-import List from './list/list';
+import Column from './column/column';
 
 export {
-  List
+  Column
 };

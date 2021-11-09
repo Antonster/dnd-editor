@@ -1,2 +1,2 @@
-// export { reducer as objectList } from './home/reducer';
-// export { reducer as objectDetailed } from './board/reducer';
+// export { reducer as home } from './home/reducer';
+export { reducer as board } from './board/reducer';

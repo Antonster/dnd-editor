@@ -1,11 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-// import { Home, Board } from './root-reducer';
+import { board } from './root-reducer';
 
 const store = configureStore({
   reducer: {
-    // Home,
-    // Board
+    board
   }
 });
 
