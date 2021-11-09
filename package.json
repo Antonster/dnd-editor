@@ -1,7 +1,19 @@
 {
   "name": "dnd-editor",
   "version": "0.1.0",
-  "homepage": "http://Antonster.github.io/dnd-editor",
+  "description": "",
+  "main": "public/index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Antonster/dnd-editor"
+  },
+  "keywords": [],
+  "author": "Antonster",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Antonster/dnd-editor/issues"
+  },
+  "homepage": "https://antonster.github.io/dnd-editor/",
   "browserslist": {
     "production": [
       ">0.2%",
