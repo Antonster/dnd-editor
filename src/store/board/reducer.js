@@ -8,6 +8,7 @@ const localData = localStorage.getItem('reduxState')
   : {};
 
 const initialState = {
+  boardColumns: [],
   ...localData.board
 };
 
